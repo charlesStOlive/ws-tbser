@@ -1,0 +1,116 @@
+# ===================================
+#  Btn  Behavior Config
+# ===================================
+
+Description: >
+    //startKeep/
+modelClass: Waka\Tbser\Models\Presentation
+
+workflow: false 
+
+###BREADCRUMP
+breadcrump:
+    inSettings: true 
+    indexUrl: waka/tbser/presentations
+    indexlabel: waka.tbser::presentation.title
+    title: waka.tbser::presentation.form_name
+
+###TOOL_BAR
+tool_bar:
+    base:
+        create: 
+            show: true
+            permissions: []
+            url: waka/tbser/presentations/create
+        reorder: 
+            show: true 
+            permissions: []
+            url: waka/tbser/presentations/reorder
+ 
+        delete: 
+            show: true
+            permissions: []
+    config_btns:
+            format: all
+            btns:
+    config_lot:
+        format: all
+        btns: 
+    # partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
+    #     testbtns:
+    #         url: $/waka/tbser/controllers/presentations/_test_btns.htm
+
+###ACTION_BAR Producteurs. Les behavior liée aux boutons doivent êtres instanciés implements = [waka.xxx.behaviors.yyy] dans le controller. 
+action_bar:
+    config_btns:
+        format: grouped #unique : un seul bouton, all : tts les boutons
+        groups:
+            waka.utils::lang.prod.produce: oc-icon-file-text-o
+            waka.utils::lang.prod.send: oc-icon-external-link
+            waka.utils::lang.prod.tools: oc-icon-wrench
+        btns:
+            duplicate:
+                config: waka.utils::btns.duplicate
+                group: waka.utils::lang.prod.tools
+
+    # partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
+    #     name:
+    #         url: $/waka/tbser/controllers/presentations/_test_update.htm
+Description: >
+    //endKeep/
+
+
+#     ##### SAUVEGARDE PURE ########
+
+# modelClass: Waka\Tbser\Models\Presentation
+
+# workflow: false 
+
+# ###BREADCRUMP
+# breadcrump:
+#     inSettings: true 
+#     indexUrl: waka/tbser/presentations
+#     indexlabel: waka.tbser::presentation.title
+#     title: waka.tbser::presentation.form_name
+
+# ###TOOL_BAR
+# tool_bar:
+#     base:
+#         create: 
+#             show: true
+#             permissions: []
+#             url: waka/tbser/presentations/create
+#         reorder: 
+#             show: true#  
+#             permissions: []
+#             url: waka/tbser/presentations/reorder
+#  
+#         delete: 
+#             show: true
+#             permissions: []
+#     config_btns:
+#             format: all
+#             btns:
+# # #     config_lot:
+#         format: all
+#         btns: 
+# # # # #     # partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
+#     #     testbtns:
+#     #         url: $/waka/tbser/controllers/presentations/_test_btns.htm
+
+# ###ACTION_BAR Producteurs. Les behavior liée aux boutons doivent êtres instanciés implements = [waka.xxx.behaviors.yyy] dans le controller. 
+# action_bar:
+#     config_btns:
+#         format: grouped #unique : un seul bouton, all : tts les boutons
+#         groups:
+#             waka.utils::lang.prod.produce: oc-icon-file-text-o
+#             waka.utils::lang.prod.send: oc-icon-external-link
+#             waka.utils::lang.prod.tools: oc-icon-wrench
+#         btns:
+# # # # # #             duplicate:
+#                 config: waka.utils::btns.duplicate
+#                 group: waka.utils::lang.prod.tools
+# # # # # # 
+#     # partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
+#     #     name:
+#     #         url: $/waka/tbser/controllers/presentations/_test_update.htm

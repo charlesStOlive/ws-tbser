@@ -1,0 +1,17 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+icon: icon-info
+attributes:
+    name:
+        label: waka.tbser::presentation.name
+    slug:
+        label: waka.tbser::presentation.slug
+    data_source:
+        label: waka.tbser::presentation.data_source
+    name_construction:
+        label: waka.tbser::presentation.name_construction
+    updated_at:
+        label: waka.utils::lang.global.updated_at
+        type: date-medium

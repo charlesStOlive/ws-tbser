@@ -1,0 +1,34 @@
+fields:
+    code:
+        label: Code du graphique
+        span: full
+    relation:
+        label: Relation portant le calcul
+    src_labels:
+        label: Source des labels
+        type: dropdown
+        options: listModelLabels
+        span: full
+        dependsOn: relations
+    src_calculs:
+        label: Source des cacluls
+        type: dropdown
+        options: listModelCalculs
+        span: left
+        dependsOn: relation
+    datas:
+        type: repeater
+        label: Series
+        form:
+            fiels:
+                src_label:
+                    label: Label sources 1
+                    span: left
+                src_att:
+                    label: Période (scope) du calcul 1
+                    type: dropdown
+                    span: right
+                    options: listPeriode
+                    sapn: auto
+            
+

@@ -1,0 +1,51 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    state:
+        label: waka.tbser::presentation.state
+        span: left
+        type: balloon-selector
+        required: true
+        default: Brouillon
+        options: listStates
+        default: Actif
+        permissions: [waka.worder.admin.*]
+    name:
+        label: waka.tbser::presentation.name
+        span: left
+        required: true
+        permissions: [waka.worder.admin.*]
+    slug:
+        label: waka.tbser::presentation.slug
+        span: right
+        required: true
+        preset: name
+        permissions: [waka.worder.admin.super]
+    slides:
+        label: waka.tbser::presentation.slides
+        span: left
+        type: codeeditor
+        language: yaml
+        permissions: [waka.worder.admin.*]
+        tab: waka.tbser::presentation.tab_edit
+    src:
+        label: waka.tbser::presentation.src
+        span: left
+        type: fileupload
+        mode: file
+        useCaption: false
+        permissions: [waka.worder.admin.super]
+    data_source:
+        label: waka.tbser::presentation.data_source
+        span: left
+        type: dropdown
+        placeholder: waka.utils::lang.global.placeholder
+        required: true
+        options: listDataSource
+        permissions: [waka.worder.admin.super]
+    name_construction:
+        label: waka.tbser::presentation.name_construction
+        span: auto
+        permissions: [waka.worder.admin.*]

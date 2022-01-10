@@ -1,0 +1,32 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: waka.tbser::presentation.form_name
+
+# Model Form Field configuration
+form: $/waka/tbser/models/presentation/fields.yaml
+
+# Model Class name
+modelClass: Waka\Tbser\Models\Presentation
+
+# Default redirect location
+defaultRedirect: waka/tbser/presentations
+
+# Create page
+create:
+    title: waka.tbser::presentation.create
+    redirect: waka/tbser/presentations/update/:id
+    redirectClose: waka/tbser/presentations
+    form: $/waka/tbser/models/presentation/fields_create.yaml
+
+# Update page
+update:
+    title: waka.tbser::presentation.update
+    redirect: waka/tbser/presentations/update/:id
+    redirectClose: waka/tbser/presentations
+
+# Preview page
+preview:
+    title: waka.tbser::presentation.preview_name

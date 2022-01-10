@@ -1,0 +1,10 @@
+# ===================================
+#  Config des data source
+# ===================================
+datasource: 
+    presentation:
+        hidden: true
+        label: Presentation
+        class: Waka\Tbser\Models\Presentation
+        controller: waka/tbser/presentations
+        attributes: waka/tbser/models/presentation/attributes.yaml

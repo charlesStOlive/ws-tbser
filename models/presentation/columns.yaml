@@ -1,0 +1,29 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    state:
+        label: waka.tbser::presentation.state
+        searchable: true
+    name:
+        label: waka.tbser::presentation.name
+        searchable: true
+    slug:
+        label: waka.tbser::presentation.slug
+        searchable: true
+    data_source:
+        label: waka.tbser::presentation.data_source
+        type: datasource
+        searchable: true
+    is_lot:
+        label: waka.tbser::presentation.is_lot
+        type: switch
+        searchable: false
+        sortable: true
+    updated_at:
+        label: waka.utils::lang.global.updated_at
+        type: timetense
+    sort_order:
+        label: waka.utils::lang.global.sort_order
+        invisible: true

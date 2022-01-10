@@ -1,0 +1,24 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+fields:
+    name:
+        label: waka.tbser::presentation.name
+        span: left
+        required: true
+        permissions: [waka.worder.admin.*]
+    slug:
+        label: waka.tbser::presentation.slug
+        span: right
+        required: true
+        preset: name
+        permissions: [waka.worder.admin.super]
+    data_source:
+        label: waka.tbser::presentation.data_source
+        span: left
+        type: dropdown
+        placeholder: waka.utils::lang.global.placeholder
+        required: true
+        options: listDataSource
+        permissions: [waka.worder.admin.super]
+

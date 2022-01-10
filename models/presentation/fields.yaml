@@ -1,0 +1,88 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+fields:
+    state:
+        label: waka.tbser::presentation.state
+        span: right
+        type: balloon-selector
+        required: true
+        default: Brouillon
+        options: listStates
+        default: Actif
+        permissions: [waka.worder.admin.*]
+    name_construction:
+        label: waka.tbser::presentation.name_construction
+        span: auto
+        permissions: [waka.worder.admin.*]
+tabs:
+    defaultTab: waka.mailer::wakamail.tab_edit
+    icons: 
+        waka.tbser::presentation.tab_edit: icon-pencil
+        waka.tbser::presentation.tab_options: icon-cog
+    fields:    
+        slides:
+            label: waka.tbser::presentation.slides
+            span: left
+            type: codeeditor
+            language: yaml
+            permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_edit
+        rule_asks:
+            label: waka.tbser::presentation.rule_asks
+            span: full
+            type: askbuilder
+            targetProductor: presentation
+            full_access: waka.rules.asks.admin
+            permissions: [waka.rules.asks.*]
+            tab: waka.tbser::presentation.tab_edit
+        rule_fncs:
+            label: waka.tbser::presentation.rule_fncs
+            span: full
+            type: fncbuilder
+            targetProductor: presentation
+            full_access: waka.rules.fncs.admin
+            permissions: [waka.rules.fncs.*]
+            tab: waka.tbser::presentation.tab_edit
+        test_id:
+            label: waka.tbser::presentation.test_id
+            span: auto
+            type: dropdown
+            placeholder: waka.utils::lang.global.placeholder
+            options: listDataSourceTarget
+            permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_options
+        is_lot:
+            label: waka.tbser::presentation.is_lot
+            span: left
+            type: switch
+            default: true
+            default: true
+            permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_options
+        rule_conditions:
+            label: waka.tbser::presentation.rule_conditions
+            span: full
+            type: rulebuilder
+            ruleMode: condition
+            targetProductor: presentation
+            permissions: [waka.mailer.admin.super]
+            tab: waka.tbser::presentation.tab_options
+secondaryTabs:
+    fields:
+        # info:
+        #     type: modelinfo
+        #     mode: secondary
+        #     src: /waka/tbser/models/presentation/fields_for_side_bar.yaml
+        infos:
+            span: full
+            type: modelinfo
+            permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_infos
+            src: waka/tbser/models/presentation/fields_for_side_bar.yaml
+        attributs:
+            span: full
+            type: attributs
+            mode: word
+            editPermissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_attributs
