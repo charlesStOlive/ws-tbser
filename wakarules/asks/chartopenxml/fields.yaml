@@ -1,15 +1,8 @@
 fields:
-    code:
-        label: Code du graphique
-        span: full
     relation:
         label: Relation portant le calcul
-    src_labels:
-        label: Source des labels
-        type: dropdown
-        options: listModelLabels
-        span: full
-        dependsOn: relations
+    title:
+        label: Titre
     src_calculs:
         label: Source des cacluls
         type: dropdown
@@ -20,7 +13,7 @@ fields:
         type: repeater
         label: Series
         form:
-            fiels:
+            fields:
                 src_label:
                     label: Label sources 1
                     span: left

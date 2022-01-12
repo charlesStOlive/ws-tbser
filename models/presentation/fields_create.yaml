@@ -37,6 +37,7 @@ fields:
         mode: file
         useCaption: false
         permissions: [waka.worder.admin.super]
+        tab: waka.tbser::presentation.tab_edit
     data_source:
         label: waka.tbser::presentation.data_source
         span: left

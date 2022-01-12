@@ -16,6 +16,7 @@ class Presentations extends Controller
         'Waka.Utils.Behaviors.SideBarUpdate',
         'Backend.Behaviors.ReorderController',
         'Waka.Utils.Behaviors.DuplicateModel',
+        'Waka.Tbser.Behaviors.PresentationBehavior',
     ];
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
@@ -24,7 +25,7 @@ class Presentations extends Controller
     public $reorderConfig = 'config_reorder.yaml';
     public $sideBarUpdateConfig = 'config_side_bar_update.yaml';
     //FIN DE LA CONFIG AUTO
-
+    //startKeep/
     public function __construct()
     {
         parent::__construct();
@@ -32,8 +33,6 @@ class Presentations extends Controller
         SettingsManager::setContext('Waka.Tbser', 'Presentations');
     }
 
-    //startKeep/
-
-        //endKeep/
+    //endKeep/
 }
 

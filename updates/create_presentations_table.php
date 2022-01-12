@@ -19,6 +19,7 @@ class CreatePresentationsTable extends Migration
             $table->string('name_construction')->nullable();
             $table->boolean('is_lot')->nullable()->default(true);
             $table->text('test_id')->nullable();
+            $table->text('debug_data')->nullable();
             //reorder
             $table->integer('sort_order')->default(0);
             //softDelete

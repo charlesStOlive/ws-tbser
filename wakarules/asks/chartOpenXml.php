@@ -1,11 +1,11 @@
 <?php namespace Waka\Tbser\WakaRules\Asks;
 
-use Waka\Tbser\Classes\Rules\ChartBase;
+use Waka\Charter\Classes\Rules\ChartBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
 use Waka\Tbser\Controllers\Charts;
 
-class Series extends ChartBase
+class chartOpenXml extends ChartBase
 {
     public $jsonable = [];
     /**
@@ -18,7 +18,7 @@ class Series extends ChartBase
             'description' => 'Remplace les données d\'un graphique powerPoint',
             'icon'        => 'icon-pie-chart',
             'premission'  => 'wcli.utils.ask.edit.admin',
-            'show_attributes' => true,
+            'show_attributes' => false,
             'productor_type' => 'chart',
         ]; 
     }
@@ -54,51 +54,23 @@ class Series extends ChartBase
         $series = $this->host->datas;
 
         $datas = [
-            'labels' => $srcLabels,
-            'datasets' => [
-                [
-                    'data' => $dataSet1,
-                    'label' => $src_1_label,
-                ],
-                [
-                    'data' => $dataSet2,
-                    'label' => $src_2_label,
-                ],
-            ],
+            'title' => $this->getConfig('title'),
+            'datasets' => [],
         ];
 
         // $attribute
-
+        $i=1;
         foreach($series as $serie) {
             $serieAttribute = $serie['src_att'];
             $attribute = ['periode' => $serieAttribute];
             $serieData = [
                 'label' => $serie['src_label'],
-                'data' =>  $model->{$src_calculs}($attribute),
+                'datas' =>  $model->{$src_calculs}($attribute),
             ];
-            array_push($datas['datasets'], $serieData);
+            $datas['datasets'][$i] = $serieData;
+            //Powerpoint n'aime pas les 0 dons je force à 1
+            $i++;
         }
-
-        
-        $dataSet1 = $model->{$src_calculs}($attributes1);
-        $dataSet2 = $model->{$src_calculs}($attributes2);
-        $labels = $model->{$srcLabels}($attributes1);
-
-
-        $datas = [
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'data' => $dataSet1,
-                    'label' => $src_1_label,
-                ],
-                [
-                    'data' => $dataSet2,
-                    'label' => $src_2_label,
-                ],
-            ],
-        ];
-        trace_log($datas);
         return $datas;
     }
 }

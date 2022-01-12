@@ -1,0 +1,14 @@
+<button type="button"
+        data-request="onLoadPresentationTest"
+        data-request-data="redirect:0, productorId:<?=$modelId?>"
+        class="btn btn-default">
+    <?= e(trans('waka.tbser::presentation.test')) ?>
+</button>
+<button type="button"
+        data-request="onDebugPpt"
+        data-request-data="redirect:0, productorId:<?=$modelId?>"
+        data-request-confirm="<?= e(trans('waka.tbser::presentation.debug_com')) ?>"
+        data-load-indicator="Analyse..."
+        class="btn btn-default">
+    <?= e(trans('waka.tbser::presentation.debug')) ?>
+</button>

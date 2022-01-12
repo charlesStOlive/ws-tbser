@@ -1,12 +1,13 @@
 <?php
 
-namespace Waka\Presentationer\Behaviors;
+namespace Waka\Tbser\Behaviors;
 
 use Backend\Classes\ControllerBehavior;
 use Redirect;
 use Waka\Utils\Classes\DataSource;
-use Waka\Presentationer\Classes\PresentationCreator;
-use Waka\Presentationer\Models\Document;
+use Waka\Tbser\Classes\PresentationCreator;
+use Waka\Tbser\Models\Presentation;
+use Waka\OpenTBS\MergePpt;
 use Session;
 
 class PresentationBehavior extends ControllerBehavior
@@ -40,7 +41,7 @@ class PresentationBehavior extends ControllerBehavior
         $modelId = post('modelId');
 
         $ds = \DataSources::findByClass($modelClass);
-        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Document', $modelId);
+        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Presentation', $modelId);
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
@@ -48,7 +49,7 @@ class PresentationBehavior extends ControllerBehavior
         $this->vars['modelClass'] = $modelClass;
 
         if($options) {
-            return $this->makePartial('$/waka/presentationer/behaviors/presentationbehavior/_popup.htm');
+            return $this->makePartial('$/waka/tbser/behaviors/presentationbehavior/_popup.htm');
         } else {
             return $this->makePartial('$/waka/utils/views/_popup_no_model.htm');
         }
@@ -62,7 +63,7 @@ class PresentationBehavior extends ControllerBehavior
         
 
         $ds = \DataSources::findByClass($modelClass);
-        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Document', $modelId);
+        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Presentation', $modelId);
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
@@ -70,7 +71,7 @@ class PresentationBehavior extends ControllerBehavior
         $this->vars['modelClass'] = $modelClass;
 
         if($options) {
-            return ['#popupActionContent' => $this->makePartial('$/waka/presentationer/behaviors/presentationbehavior/_content.htm')];
+            return ['#popupActionContent' => $this->makePartial('$/waka/tbser/behaviors/presentationbehavior/_content.htm')];
         } else {
             return ['#popupActionContent' => $this->makePartial('$/waka/utils/views/_content_no_model.htm')];
         }
@@ -82,9 +83,9 @@ class PresentationBehavior extends ControllerBehavior
         $productorId = post('productorId');
         $modelClass = post('modelClass');
         $modelId = post('modelId');
-        $wakaPdf = Document::find($productorId);
+        $presentation = Presentation::find($productorId);
         $ds = \DataSources::findByClass($modelClass);
-        $asks = $ds->getProductorAsks('Waka\Presentationer\Models\Document',$productorId, $modelId);
+        $asks = $ds->getProductorAsks('Waka\Presentationer\Models\Presentation',$productorId, $modelId);
         $askDataWidget = $this->createAskDataWidget();
         $askDataWidget->addFields($asks);
         $this->vars['askDataWidget'] = $askDataWidget;
@@ -104,7 +105,7 @@ class PresentationBehavior extends ControllerBehavior
         $modelId = post('modelId');
         Session::put('presentation_asks_'.$modelId, $datas['asks_array'] ?? []);
 
-        return Redirect::to('/backend/waka/presentationer/documents/makepresentation/?productorId=' . $productorId . '&modelId=' . $modelId);
+        return Redirect::to('/backend/waka/tbser/presentations/makepresentation/?productorId=' . $productorId . '&modelId=' . $modelId);
     }
 
     /**
@@ -126,16 +127,16 @@ class PresentationBehavior extends ControllerBehavior
         }
     }
     /**
-     * Cette fonction est utilisé lors du test depuis le controller document.
+     * Cette fonction est utilisé lors du test depuis le controller presentation.
      */
-    public function onLoadPresentationBehaviorForm()
+    public function onLoadPresentationTest()
     {
         $productorId = post('productorId');
-        $documentTestId = Document::find($productorId)->test_id;
-        if ($documentTestId) {
-            $modelId = $documentTestId;
+        $presentationTestId = Presentation::find($productorId)->test_id;
+        if ($presentationTestId) {
+            $modelId = $presentationTestId;
             //trace_log($modelId);
-            return Redirect::to('/backend/waka/presentationer/documents/makepresentation/?productorId=' . $productorId . '&modelId=' . $modelId);
+            return Redirect::to('/backend/waka/tbser/presentations/makepresentation/?productorId=' . $productorId . '&modelId=' . $modelId);
         } else {
             throw new \ValidationException(['error' => "Choisissez un modèle de test"]);
         }
@@ -145,9 +146,9 @@ class PresentationBehavior extends ControllerBehavior
         $productorId = \Input::get('productorId');
         $modelId = \Input::get('modelId');
         $asks = Session::pull('presentation_asks_'.$modelId);
-        return PresentationCreator::find($productorId)->setModelId($modelId)->setAsksResponse($asks)->renderPresentation();
+        return PresentationCreator::find($productorId)->setModelId($modelId)->setAsksResponse($asks)->render();
     }
-
+    //
     public function onLoadPresentationCheck()
     {
         $productorId = post('productorId');
@@ -156,20 +157,34 @@ class PresentationBehavior extends ControllerBehavior
         if(!$modelTest) {
             throw new \ValidationException(['test_id' => "Le modèle de test n'est pas renseigné ou n'existe plus"]);
         }
-        return $productor->setModelId($modelTest)->checkDocument();
+        return $productor->setModelId($modelTest)->checkPresentation();
     }
-
+    //
+    public function onDebugPpt() {
+        $productorId = post('productorId');
+        //trace_log('productorId : '.$productorId);
+        $merger = new MergePpt();
+        //trace_log('ok');
+        $presentation = Presentation::find($productorId);
+        //trace_log('ok2');
+        $merger->loadTemplate($presentation->src->getLocalPath());
+        $debugData = $merger->degubTemplate();
+        $presentation->debug_data = $debugData;
+        $presentation->save();
+        return \Redirect::refresh();
+    }
+    //
     public function createPresentationBehaviorWidget()
     {
-        $config = $this->makeConfig('$/waka/presentationer/models/document/fields_for_test.yaml');
+        $config = $this->makeConfig('$/waka/tbser/models/presentation/fields_for_test.yaml');
         $config->alias = 'presentationBehaviorformWidget';
         $config->arrayName = 'presentationBehavior_array';
-        $config->model = new Document();
+        $config->model = new Presentation();
         $widget = $this->makeWidget('Backend\Widgets\Form', $config);
         $widget->bindToController();
         return $widget;
     }
-
+    //
     public function createAskDataWidget()
     {
         $config = $this->makeConfig('$/waka/utils/models/ask/empty_fields.yaml');

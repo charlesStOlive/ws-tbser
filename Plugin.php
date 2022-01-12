@@ -125,6 +125,17 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerWakaRules()
+    {
+        return [
+            'asks' => [
+                ['\Waka\Tbser\WakaRules\Asks\chartOpenXml',  'onlyProductors' => ['presentation']],
+            ],
+            'fncs' => [],
+            'conditions' => [],
+        ];
+    }
+
     /**
      * Registers back-end navigation items for this plugin.
      *

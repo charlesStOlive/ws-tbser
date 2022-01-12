@@ -20,6 +20,7 @@ tabs:
     icons: 
         waka.tbser::presentation.tab_edit: icon-pencil
         waka.tbser::presentation.tab_options: icon-cog
+        waka.tbser::presentation.tab_debug: icon-bug
     fields:    
         slides:
             label: waka.tbser::presentation.slides
@@ -27,6 +28,14 @@ tabs:
             type: codeeditor
             language: yaml
             permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_edit
+        src:
+            label: waka.tbser::presentation.src
+            span: left
+            type: fileupload
+            mode: file
+            useCaption: false
+            permissions: [waka.worder.admin.super]
             tab: waka.tbser::presentation.tab_edit
         rule_asks:
             label: waka.tbser::presentation.rule_asks
@@ -68,6 +77,13 @@ tabs:
             targetProductor: presentation
             permissions: [waka.mailer.admin.super]
             tab: waka.tbser::presentation.tab_options
+        debug_data:
+            label: waka.tbser::presentation.debug_data
+            span: full
+            type: codeeditor
+            size: giant
+            permissions: [waka.worder.admin.*]
+            tab: waka.tbser::presentation.tab_debug
 secondaryTabs:
     fields:
         # info:
