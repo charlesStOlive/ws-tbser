@@ -157,7 +157,7 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
             throw new \SystemException("Le modelId n a pas ete instancié");
         }
         $data = $this->prepareCreatorVars();
-        trace_log($data);
+        //trace_log($data);
         $this->merger = new MergePpt();
         $this->merger->loadTemplate($this->getProductor()->src->getLocalPath());
         //
@@ -187,15 +187,15 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
                 $this->merger->mergeField($key, $values, 'Chart');
             } 
             if($list = $slide['create_rows'] ?? false) {
-                trace_log("on cree des listes-------------------------------");
+                //trace_log("on cree des listes-------------------------------");
                 $listTemp = explode('.', $list);
                 $fncName = $listTemp[1] ?? null;
                 if(!$fncName) {
                     throw new \ApplicationException('Il manque le nom des rows lors de la création du chart');
                 }
                 $values = array_get($data, $list);
-                trace_log($values['datas']);
-                trace_log($fncName);
+                //trace_log($values['datas']);
+                //trace_log($fncName);
                 
 
                 $this->merger->MergeBlock($key,$fncName, $values['datas']);

@@ -1,8 +1,17 @@
 fields:
+    is_shared:
+        label: partagé
+        type: checkbox
+        default: 1
     relation:
         label: Relation portant le calcul
     title:
         label: Titre
+        default: mon titre
+    test:
+        label: test
+        type: taglist
+        mode: array
     src_calculs:
         label: Source des cacluls
         type: dropdown
@@ -17,6 +26,7 @@ fields:
                 src_label:
                     label: Label sources 1
                     span: left
+                    default: CA
                 src_att:
                     label: Période (scope) du calcul 1
                     type: dropdown

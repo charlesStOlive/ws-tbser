@@ -4,22 +4,26 @@ use Waka\Charter\Classes\Rules\ChartBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
 use Waka\Tbser\Controllers\Charts;
+use Waka\Utils\Interfaces\Ask as AskInterface;
 
 class chartOpenXml extends ChartBase
 {
-    public $jsonable = [];
+    public $jsonable = ['datas', 'test'];
     /**
      * Returns information about this event, including name and description.
      */
-    public function askDetails()
+    public function subFormDetails()
     {
         return [
-            'name'        => 'Graphiques PowerPoint',
-            'description' => 'Remplace les données d\'un graphique powerPoint',
-            'icon'        => 'icon-pie-chart',
+            'name'        => 'Graphique PowerPoint',
+            'description' => 'Un graphique pour powerpoint',
+            'icon'        => 'icon-chart',
             'premission'  => 'wcli.utils.ask.edit.admin',
+            'ask_emit'    => 'richeditor',
             'show_attributes' => false,
-            'productor_type' => 'chart',
+            'outputs' => [
+                'word_type' => 'HTM',
+            ]
         ]; 
     }
 
@@ -51,7 +55,8 @@ class chartOpenXml extends ChartBase
         $srcLabels = $this->getConfig('src_labels');
         $src_calculs = $this->getConfig('src_calculs');
 
-        $series = $this->host->datas;
+        $series = $this->host->getConfig('datas');
+        //trace_log($series);
 
         $datas = [
             'title' => $this->getConfig('title'),
