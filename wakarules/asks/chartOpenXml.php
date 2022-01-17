@@ -19,7 +19,6 @@ class chartOpenXml extends ChartBase
             'description' => 'Un graphique pour powerpoint',
             'icon'        => 'icon-chart',
             'premission'  => 'wcli.utils.ask.edit.admin',
-            'ask_emit'    => 'richeditor',
             'show_attributes' => false,
             'outputs' => [
                 'word_type' => 'HTM',

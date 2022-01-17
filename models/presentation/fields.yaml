@@ -40,17 +40,19 @@ tabs:
         rule_asks:
             label: waka.tbser::presentation.rule_asks
             span: full
-            type: askbuilder
+            type: rulebuilder
             targetProductor: presentation
             full_access: waka.rules.asks.admin
+            ruleMode: ask
             permissions: [waka.rules.asks.*]
             tab: waka.tbser::presentation.tab_edit
         rule_fncs:
             label: waka.tbser::presentation.rule_fncs
             span: full
-            type: fncbuilder
+            type: rulebuilder
             targetProductor: presentation
             full_access: waka.rules.fncs.admin
+            ruleMode: fnc
             permissions: [waka.rules.fncs.*]
             tab: waka.tbser::presentation.tab_edit
         test_id:
