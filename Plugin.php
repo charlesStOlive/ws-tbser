@@ -135,7 +135,7 @@ class Plugin extends PluginBase
     {
         return [
             'asks' => [
-                ['\Waka\Tbser\WakaRules\Asks\chartOpenXml',  'onlyProductors' => ['presentation']],
+                ['\Waka\Tbser\WakaRules\Asks\chartOpenXml',  'onlyClass' => ['presentation']],
             ],
             'fncs' => [],
             'conditions' => [],
