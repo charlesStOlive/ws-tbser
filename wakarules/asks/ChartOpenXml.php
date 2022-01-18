@@ -6,7 +6,7 @@ use ApplicationException;
 use Waka\Tbser\Controllers\Charts;
 use Waka\Utils\Interfaces\Ask as AskInterface;
 
-class chartOpenXml extends ChartBase
+class ChartOpenXml extends ChartBase
 {
     public $jsonable = ['datas', 'test'];
     /**

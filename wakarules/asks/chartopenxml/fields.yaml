@@ -1,10 +1,7 @@
 fields:
-    is_shared:
-        label: partagé
-        type: checkbox
-        default: 1
     relation:
         label: Relation portant le calcul
+        restricted: true
     title:
         label: Titre
         default: mon titre
