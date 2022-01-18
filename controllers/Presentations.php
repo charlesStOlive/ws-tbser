@@ -33,6 +33,12 @@ class Presentations extends Controller
         SettingsManager::setContext('Waka.Tbser', 'Presentations');
     }
 
+    public function update($id)
+    {
+        $this->bodyClass = 'compact-container';
+        return $this->asExtension('FormController')->update($id);
+    }
+
     //endKeep/
 }
 
