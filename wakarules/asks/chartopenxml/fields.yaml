@@ -5,10 +5,6 @@ fields:
     title:
         label: Titre
         default: mon titre
-    test:
-        label: test
-        type: taglist
-        mode: array
     src_calculs:
         label: Source des cacluls
         type: dropdown
