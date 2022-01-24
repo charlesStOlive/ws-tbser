@@ -99,12 +99,6 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
         return $this;
     }
 
-    public function createTwigStrName($data)
-    {
-        $nameConstruction = \Twig::parse($this->getProductor()->name_construction, $data);
-        return str_slug($nameConstruction);
-    }
-
     public function prepareCreatorVars()
     {
         $this->ds =  \DataSources::find($this->getProductor()->data_source);
@@ -204,7 +198,7 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
             } 
         }
         //
-        $fileOutputname = $this->createTwigStrName($data);
+        $fileOutputname = $this->createTwigStrName();
         return $this->merger->downloadPpt($fileOutputname.'.pptx');
         
 

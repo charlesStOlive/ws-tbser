@@ -11,6 +11,7 @@ return [
     'is_lot' => 'Autoriser dans les lots ?',
     'name' => 'libellé presentation',
     'name_construction' => 'Construction du nom du fichier',
+    'output_name' => 'Construction du nom du fichier',
     'preview_name' => 'Voir presentation',
     'rule_asks' => 'Champs éditables',
     'rule_conditions' => 'Conditions',

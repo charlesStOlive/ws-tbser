@@ -1,3 +1,6 @@
 1.0.1: 
   - 'First version of tbser'
   - create_presentations_table.php
+1.1.0: 
+  - 'Changement output_name'
+  - create_presentations_table_u110.php

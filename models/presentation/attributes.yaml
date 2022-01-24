@@ -10,8 +10,8 @@ attributes:
         label: waka.tbser::presentation.slug
     data_source:
         label: waka.tbser::presentation.data_source
-    name_construction:
-        label: waka.tbser::presentation.name_construction
+    output_name:
+        label: waka.tbser::presentation.output_name
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: date-medium
