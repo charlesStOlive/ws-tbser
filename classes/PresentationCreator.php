@@ -4,135 +4,24 @@ use Waka\Tbser\Models\Presentation;
 use Waka\Utils\Classes\DataSource;
 use Waka\Utils\Classes\TmpFiles;
 use Waka\OpenTBS\MergePpt;
+use Waka\Utils\Classes\ProductorCreator;
 
-class PresentationCreator extends \Winter\Storm\Extension\Extendable
+class PresentationCreator extends ProductorCreator
 {
-    public static $presentation;
-    public $ds;
-    public $modelId;
     public $merger;
-
-    public $askResponse = [];
-
-    private $isTwigStarted;
 
     public static function find($presentation_id)
     {
         $presentation = Presentation::find($presentation_id);
-        self::$presentation = $presentation;
+        self::$productor = $presentation;
         return new self;
     }
 
-    public static function getProductor()
-    {
-        return self::$presentation;
-    }
-    
-
-    public function setModelId($modelId)
-    {
-        $this->modelId = $modelId;
-        $dataSourceId = $this->getProductor()->data_source;
-        $this->ds =  \DataSources::find($dataSourceId);
-        $this->ds->instanciateModel($modelId);
-        return $this;
-    }
-
-    public function setModelTest()
-    {
-        $this->modelId = $this->getProductor()->test_id;
-        if(!$this->modelId) {
-             throw new \ValidationException(['test_id' => \Lang::get('waka.tbser::presentation.e.test_id')]);
-        }
-        $dataSourceId = $this->getProductor()->data_source;
-        $this->ds =  \DataSources::find($dataSourceId);
-        $this->ds->instanciateModel($this->modelId);
-        return $this;
-    }
-
-    public function setRuleAsksResponse($datas = [])
-    {
-        $askArray = [];
-        $srcmodel = $this->ds->getModel($this->modelId);
-        $asks = $this->getProductor()->rule_asks()->get();
-        foreach($asks as $ask) {
-            $key = $ask->getCode();
-            //trace_log($key);
-            $askResolved = $ask->resolve($srcmodel, 'twig', $datas);
-            $askArray[$key] = $askResolved;
-        }
-        //trace_log($askArray); // les $this->askResponse sont prioritaire
-        return array_replace($askArray,$this->askResponse);
-        
-    }
-
-    //BEBAVIOR AJOUTE LES REPOSES ??
-    public function setAsksResponse($datas = [])
-    {
-        $this->askResponse = $this->ds->getAsksFromData($datas, $this->getProductor()->asks);
-        return $this;
-    }
-
-    public function setRuleFncsResponse()
-    {
-        $fncArray = [];
-        $srcmodel = $this->ds->getModel($this->modelId);
-        $fncs = $this->getProductor()->rule_fncs()->get();
-        foreach($fncs as $fnc) {
-            $key = $fnc->getCode();
-            //trace_log('key of the function');
-            $fncResolved = $fnc->resolve($srcmodel,$this->ds->code);
-            $fncArray[$key] = $fncResolved;
-        }
-        //trace_log($fncArray);
-        return $fncArray;
-        
-    }
-
-    public function setdefaultAsks($datas = [])
-    {
-        if($this->ds) {
-             $this->askResponse = $this->ds->getAsksFromData($datas, $this->getProductor()->asks);
-        } else {
-            $this->askResponse = [];
-        }
-        return $this;
-    }
-
-    public function prepareCreatorVars()
-    {
-        $this->ds =  \DataSources::find($this->getProductor()->data_source);
-        $data = $this->ds->getValues($this->modelId);
-
-        $model = ['ds' => $data];
-        
-        //Nouveau bloc pour nouveaux asks
-        if($this->getProductor()->rule_asks()->count()) {
-            $this->askResponse = $this->setRuleAsksResponse($model);
-        } else {
-            //Injection des asks s'ils existent dans le model;
-            if(!$this->askResponse) {
-                $this->setAsksResponse($model);
-            }
-        }
-
-        //Nouveau bloc pour les new Fncs
-        if($this->getProductor()->rule_fncs()->count()) {
-            $fncs = $this->setRuleFncsResponse($model);
-            $model = array_merge($model, [ 'fncs' => $fncs]);
-        }
-        //trace_log("ASK RESPONSE");
-        //trace_log($this->askResponse);
-        $model = array_merge($model, [ 'asks' => $this->askResponse]);
-        return $model;
-    }
-
-    public function getSlides() {
-        $slides = \Twig::parse($this->getProductor()->slides);
+    public function getSlides($data) {
+        $slides = \Twig::parse($this->getProductor()->slides, $data);
         //trace_log($slides);
         $slides = \Yaml::parse($slides);
         //trace_log($slides);
-
         return $slides;
     }
 
@@ -140,17 +29,17 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
 
     public function checkConditions()//Ancienement checkScopes
     {
-        $conditions = new \Waka\Utils\Classes\Conditions($this->getProductor(), $this->ds->model);
+        $conditions = new \Waka\Utils\Classes\Conditions($this->getProductor(), self::$ds->model);
         return $conditions->checkConditions();
     }
 
     public function render($inline = false)
     {
-        if (!$this->ds || !$this->modelId) {
+        if (!self::$ds || !$this->modelId) {
             //trace_log("modelId pas instancie");
             throw new \SystemException("Le modelId n a pas ete instancié");
         }
-        $data = $this->prepareCreatorVars();
+        $data = $this->getProductorVars();
         //trace_log($data);
         $this->merger = new MergePpt();
         $this->merger->loadTemplate($this->getProductor()->src->getLocalPath());
@@ -165,7 +54,9 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
             if($askImage = $slide['change_image'] ?? false) {
                 $image = array_get($data, $askImage);
                 //trace_log($image['path']);
-                $this->merger->changePicture($key, '#merge_me#', $image['path']);
+                $temp = new TmpFiles();
+                $temp->putUrlFile($image['path']);
+                $this->merger->changePicture($key, '#'.$askImage.'#', $temp->getFilePath());
                 $this->merger->mergeField($key, $image, 'image');
             } 
             if($slide['delete_slide'] ?? false) {
@@ -212,7 +103,7 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
 
     public function renderCloud($lot = false)
     {
-        if (!$this->ds || !$this->modelId) {
+        if (!self::$ds || !$this->modelId) {
             //trace_log("modelId pas instancie");
             throw new \SystemException("Le modelId n a pas ete instancié");
         }
@@ -224,7 +115,7 @@ class PresentationCreator extends \Winter\Storm\Extension\Extendable
         //     $path = 'lots';
         // } else {
         //     $folderOrg = new \Waka\Cloud\Classes\FolderOrganisation();
-        //     $path = $folderOrg->getPath($this->ds->model);
+        //     $path = $folderOrg->getPath(self::$ds->model);
         // }
         // $cloudSystem->put($path.'/'.$data['fileName'], $pdfContent);
     }

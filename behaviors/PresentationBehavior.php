@@ -41,7 +41,7 @@ class PresentationBehavior extends ControllerBehavior
         $modelId = post('modelId');
 
         $ds = \DataSources::findByClass($modelClass);
-        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Presentation', $modelId);
+        $options = $ds->getProductorOptions('Waka\Tbser\Models\Presentation', $modelId);
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
@@ -63,7 +63,7 @@ class PresentationBehavior extends ControllerBehavior
         
 
         $ds = \DataSources::findByClass($modelClass);
-        $options = $ds->getProductorOptions('Waka\Presentationer\Models\Presentation', $modelId);
+        $options = $ds->getProductorOptions('Waka\Tbser\Models\Presentation', $modelId);
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
@@ -85,7 +85,7 @@ class PresentationBehavior extends ControllerBehavior
         $modelId = post('modelId');
         $presentation = Presentation::find($productorId);
         $ds = \DataSources::findByClass($modelClass);
-        $asks = $ds->getProductorAsks('Waka\Presentationer\Models\Presentation',$productorId, $modelId);
+        $asks = $ds->getProductorAsks('Waka\Tbser\Models\Presentation',$productorId, $modelId);
         $askDataWidget = $this->createAskDataWidget();
         $askDataWidget->addFields($asks);
         $this->vars['askDataWidget'] = $askDataWidget;
@@ -168,7 +168,7 @@ class PresentationBehavior extends ControllerBehavior
         $presentation = Presentation::find($productorId);
         //trace_log('ok2');
         $merger->loadTemplate($presentation->src->getLocalPath());
-        $debugData = $merger->degubTemplate();
+        return  $merger->degubTemplate();
         $presentation->debug_data = $debugData;
         $presentation->save();
         return \Redirect::refresh();
