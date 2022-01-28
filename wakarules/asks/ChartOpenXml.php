@@ -51,9 +51,7 @@ class ChartOpenXml extends ChartBase
             $model = $this->getRelation($model, $childModel);
         }
         //
-        $srcLabels = $this->getConfig('src_labels');
         $src_calculs = $this->getConfig('src_calculs');
-
         $series = $this->host->getConfig('datas');
         //trace_log($series);
 
@@ -66,6 +64,7 @@ class ChartOpenXml extends ChartBase
         $i=1;
         foreach($series as $serie) {
             $serieAttribute = $serie['src_att'];
+            // Cas des attributs période
             $attribute = ['periode' => $serieAttribute];
             $serieData = [
                 'label' => $serie['src_label'],

@@ -1,19 +1,41 @@
 fields:
-    relation:
+    elation:
         label: Relation portant le calcul
         restricted: true
-    title:
-        label: Titre
-        default: mon titre
+        span: left
     src_calculs:
         label: Source des cacluls
         type: dropdown
         options: listModelCalculs
-        span: left
+        placeholder: --choisissez--
+        span: right
         dependsOn: relation
+    attributesMode:
+        label: Mode choix des attributs
+        type: dropdown
+        dependsOn: relation
+        span: left
+        restricted: true
+        options:
+            scopes: Scopes
+            perso: Personalisés
+    attributesFunction:
+        label: Fonctions determinsant les attributs
+        span: right
+        type: dropdown
+        options: listModelSeries
+        restricted: true
+        trigger:
+            action: show
+            field: attributesMode
+            condition: value[perso]
+    title:
+        label: Titre gu graphique
+        span: full
     datas:
         type: repeater
         label: Series
+        dependsOn: [attributesMode, attributesFunction]
         form:
             fields:
                 src_label:
@@ -24,7 +46,7 @@ fields:
                     label: Période (scope) du calcul 1
                     type: dropdown
                     span: right
-                    options: listPeriode
+                    options: listAttributes
                     sapn: auto
             
 
