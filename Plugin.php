@@ -126,7 +126,7 @@ class Plugin extends PluginBase
     {
         return [
             'cleanSoftDelete' => [
-                \Waka\Tbser\Models\Document::class => 0,
+                \Waka\Tbser\Models\Presentation::class => 0,
             ],
         ];
     }
