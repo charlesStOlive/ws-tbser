@@ -49,15 +49,16 @@ class PresentationCreator extends ProductorCreator
         foreach($slides as $key=>$slide) {
             if($slide['merge'] ?? false) {
                 //Pas malin ici mais je suis obligé d'ajouter un prefix a mon tableau. donc je met ds et je pointe la ligne ds. 
-                $this->merger->mergeField($key, $data['ds']);
+                $this->merger->mergeField($key, $data['ds']->toArray());
             }
             if($askImage = $slide['change_image'] ?? false) {
                 $image = array_get($data, $askImage);
-                //trace_log($image['path']);
                 $temp = new TmpFiles();
+               
                 $temp->putUrlFile($image['path']);
                 $this->merger->changePicture($key, '#'.$askImage.'#', $temp->getFilePath());
                 $this->merger->mergeField($key, $image, 'image');
+                $temp->delete();
             } 
             if($slide['delete_slide'] ?? false) {
                 $this->merger->deleteSlide($key);
