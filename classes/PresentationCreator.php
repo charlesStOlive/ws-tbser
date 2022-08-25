@@ -127,37 +127,6 @@ class PresentationCreator extends ProductorCreator
 
     
 
-    /**
-     * Temporarily registers mail based token parsers with Twig.
-     * @return void
-     */
-    protected function startTwig()
-    {
-        if ($this->isTwigStarted) {
-            return;
-        }
+    
 
-        $this->isTwigStarted = true;
-
-        $markupManager = \System\Classes\MarkupManager::instance();
-        $markupManager->beginTransaction();
-        $markupManager->registerTokenParsers([
-            new \System\Twig\MailPartialTokenParser,
-        ]);
-    }
-
-    /**
-     * Indicates that we are finished with Twig.
-     * @return void
-     */
-    protected function stopTwig()
-    {
-        if (!$this->isTwigStarted) {
-            return;
-        }
-
-        $markupManager = \System\Classes\MarkupManager::instance();
-        $markupManager->endTransaction();
-        $this->isTwigStarted = false;
-    }
 }
