@@ -27,11 +27,11 @@ class PresentationCreator extends ProductorCreator
 
     
 
-    public function checkConditions()//Ancienement checkScopes
-    {
-        $conditions = new \Waka\Utils\Classes\Conditions($this->getProductor(), self::$ds->model);
-        return $conditions->checkConditions();
-    }
+    // public function checkConditions()//Ancienement checkScopes
+    // {
+    //     $conditions = new \Waka\Utils\Classes\Conditions($this->getProductor(), self::$ds->model);
+    //     return $conditions->checkConditions();
+    // }
 
     public function render($inline = false)
     {

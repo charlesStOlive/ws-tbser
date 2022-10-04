@@ -12,8 +12,6 @@ use Session;
 
 class PresentationBehavior extends ControllerBehavior
 {
-    use \Waka\Utils\Classes\Traits\StringRelation;
-
     protected $presentationBehaviorWidget;
     protected $askDataWidget;
     public $errors;
