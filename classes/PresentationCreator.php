@@ -1,4 +1,6 @@
-<?php namespace Waka\Tbser\Classes;
+<?php
+
+namespace Waka\Tbser\Classes;
 
 use Waka\Tbser\Models\Presentation;
 use Waka\Utils\Classes\DataSource;
@@ -17,53 +19,34 @@ class PresentationCreator extends ProductorCreator
         return new self;
     }
 
-    public function getSlides($data) {
-        $slides = \Twig::parse($this->getProductor()->slides, $data);
-        //trace_log($slides);
-        $slides = \Yaml::parse($slides);
-        //trace_log($slides);
-        return $slides;
-    }
-
-    
-
-    // public function checkConditions()//Ancienement checkScopes
-    // {
-    //     $conditions = new \Waka\Utils\Classes\Conditions($this->getProductor(), self::$ds->model);
-    //     return $conditions->checkConditions();
-    // }
-
     public function render($inline = false)
     {
-        if (!self::$ds || !$this->modelId) {
-            //trace_log("modelId pas instancie");
-            throw new \SystemException("Le modelId n a pas ete instancié");
-        }
-        $data = $this->getProductorVars();
-        //trace_log($data);
+        $data = array_merge(['asks' => $this->getSessionModelData()], $this->getAsksAndFncs()); 
         $this->merger = new MergePpt();
         $this->merger->loadTemplate($this->getProductor()->src->getLocalPath());
         //
         $slides = $this->getSlides($data);
         //
-        foreach($slides as $key=>$slide) {
-            if($slide['merge'] ?? false) {
+        foreach ($slides as $key => $slide) {
+            if ($slide['merge'] ?? false) {
                 //Pas malin ici mais je suis obligé d'ajouter un prefix a mon tableau. donc je met ds et je pointe la ligne ds. 
-                $this->merger->mergeField($key, $data['ds']->toArray());
+                if($data['ds'] ?? false) $this->merger->mergeField($key, $data['ds']);
+                if($data['asks'] ?? false)   $this->merger->mergeField($key, $data['asks'], 'asks');
+                if($data['fncs'] ?? false)   $this->merger->mergeField($key, $data['fncs'], 'fncs');
             }
-            if($askImage = $slide['change_image'] ?? false) {
+            if ($askImage = $slide['change_image'] ?? false) {
                 $image = array_get($data, $askImage);
                 $temp = new TmpFiles();
-               
+
                 $temp->putUrlFile($image['path']);
-                $this->merger->changePicture($key, '#'.$askImage.'#', $temp->getFilePath());
+                $this->merger->changePicture($key, '#' . $askImage . '#', $temp->getFilePath());
                 $this->merger->mergeField($key, $image, 'image');
                 $temp->delete();
-            } 
-            if($slide['delete_slide'] ?? false) {
+            }
+            if ($slide['delete_slide'] ?? false) {
                 $this->merger->deleteSlide($key);
             }
-            if($askChart = $slide['change_chart'] ?? false) {
+            if ($askChart = $slide['change_chart'] ?? false) {
                 //trace_log("on change un chart-------------------------------");
                 $askCode = $askChart['values'];
                 $values = array_get($data, $askCode);
@@ -71,47 +54,38 @@ class PresentationCreator extends ProductorCreator
                 //trace_log($values['datasets']);
                 $this->merger->changeChart($chartCode, $values['datasets'], true);
                 $this->merger->mergeField($key, $values, 'Chart');
-            } 
-            if($list = $slide['create_rows'] ?? false) {
+            }
+            if ($list = $slide['create_rows'] ?? false) {
                 //trace_log("on cree des listes-------------------------------");
                 $listTemp = explode('.', $list);
                 $fncName = $listTemp[1] ?? null;
-                if(!$fncName) {
+                if (!$fncName) {
                     throw new \ApplicationException('Il manque le nom des rows lors de la création du chart');
                 }
                 $values = array_get($data, $list);
                 //trace_log($values['datas']);
                 //trace_log($fncName);
-                
-
-                $this->merger->MergeBlock($key,$fncName, $values['datas']);
+                $this->merger->MergeBlock($key, $fncName, $values['datas']);
                 $this->merger->mergeField($key, $values, $fncName);
-                
-            } 
+            }
         }
         //
         $fileOutputname = $this->createTwigStrName();
-        return $this->merger->downloadPpt($fileOutputname.'.pptx');
-        
-
-
-        
-
-        
+        return $this->merger->downloadPpt($fileOutputname . '.pptx');
     }
 
-    
+    public function getSlides($data)
+    {
+        $slides = \Twig::parse($this->getProductor()->slides, $data);
+        //trace_log($slides);
+        $slides = \Yaml::parse($slides);
+        //trace_log($slides);
+        return $slides;
+    }
 
     public function renderCloud($lot = false)
     {
-        if (!self::$ds || !$this->modelId) {
-            //trace_log("modelId pas instancie");
-            throw new \SystemException("Le modelId n a pas ete instancié");
-        }
         $data = $this->prepareCreatorVars();
-        
-        
-
         // if ($lot) {
         //     $path = 'lots';
         // } else {
@@ -120,13 +94,4 @@ class PresentationCreator extends ProductorCreator
         // }
         // $cloudSystem->put($path.'/'.$data['fileName'], $pdfContent);
     }
-
-    
-
-    
-
-    
-
-    
-
 }

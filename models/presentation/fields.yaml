@@ -59,7 +59,6 @@ tabs:
             span: left
             type: switch
             default: true
-            default: true
             permissions: [waka.worder.admin.*]
             tab: waka.tbser::presentation.tab_options
         rule_conditions:

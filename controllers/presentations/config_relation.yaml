@@ -3,14 +3,15 @@
 # ===================================
 
 waka_session:
-    label: waka.tbser::presentation.waka_session
+    label: waka.pdfer::wakapdf.waka_session
     manage:
+        form: $/waka/session/models/wakasession/fields.yaml
     view:
         form: $/waka/session/models/wakasession/fields.yaml
-        recordUrl: waka/session/wakasessions/update/:id
         toolbarButtons: update|delete
         showCheckboxes: false
         defaultSort:
             column: name
             direction: asc
+
 
