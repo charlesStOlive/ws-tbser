@@ -12,10 +12,6 @@ columns:
     slug:
         label: waka.tbser::presentation.slug
         searchable: true
-    data_source:
-        label: waka.tbser::presentation.data_source
-        type: datasource
-        searchable: true
     is_lot:
         label: waka.tbser::presentation.is_lot
         type: switch

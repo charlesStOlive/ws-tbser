@@ -15,10 +15,8 @@ class CreatePresentationsTable extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->text('slides')->nullable();
-            $table->string('data_source')->nullable();
-            $table->string('name_construction')->nullable();
+            $table->string('output_name')->nullable();
             $table->boolean('is_lot')->nullable()->default(true);
-            $table->text('test_id')->nullable();
             $table->text('debug_data')->nullable();
             //reorder
             $table->integer('sort_order')->default(0);

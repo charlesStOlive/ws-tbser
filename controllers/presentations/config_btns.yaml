@@ -52,9 +52,9 @@ action_bar:
                 config: waka.utils::btns.duplicate
                 group: waka.utils::lang.prod.tools
 
-    partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
-        name:
-            url: $/waka/tbser/controllers/presentations/_btns.htm
+    # partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
+    #     name:
+    #         url: $/waka/tbser/controllers/presentations/_test_update.htm
 
 
 

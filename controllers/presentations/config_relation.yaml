@@ -1,0 +1,16 @@
+# ===================================
+# Relation Behavior Config
+# ===================================
+
+waka_session:
+    label: waka.tbser::presentation.waka_session
+    manage:
+    view:
+        form: $/waka/session/models/wakasession/fields.yaml
+        recordUrl: waka/session/wakasessions/update/:id
+        toolbarButtons: update|delete
+        showCheckboxes: false
+        defaultSort:
+            column: name
+            direction: asc
+

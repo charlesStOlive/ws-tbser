@@ -8,8 +8,6 @@ attributes:
         label: waka.tbser::presentation.name
     slug:
         label: waka.tbser::presentation.slug
-    data_source:
-        label: waka.tbser::presentation.data_source
     output_name:
         label: waka.tbser::presentation.output_name
     updated_at:

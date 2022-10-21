@@ -13,6 +13,7 @@ class Presentations extends Controller
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
         'Waka.Utils.Behaviors.BtnsBehavior',
+        'Backend.Behaviors.RelationController',
         'Waka.Utils.Behaviors.SideBarUpdate',
         'Backend.Behaviors.ReorderController',
         'Waka.Utils.Behaviors.DuplicateModel',
@@ -21,6 +22,7 @@ class Presentations extends Controller
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
     public $btnsConfig = 'config_btns.yaml';
+    public $relationConfig = 'config_relation.yaml';
     public $duplicateConfig = 'config_duplicate.yaml';
     public $reorderConfig = 'config_reorder.yaml';
     public $sideBarUpdateConfig = 'config_side_bar_update.yaml';
