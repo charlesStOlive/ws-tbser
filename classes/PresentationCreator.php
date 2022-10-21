@@ -21,7 +21,7 @@ class PresentationCreator extends ProductorCreator
 
     public function render($inline = false)
     {
-        $data = array_merge(['asks' => $this->getSessionModelData()], $this->getAsksAndFncs()); 
+        $data = array_merge(['ds' => $this->getSessionModelData()], $this->getAsksAndFncs()); 
         $this->merger = new MergePpt();
         $this->merger->loadTemplate($this->getProductor()->src->getLocalPath());
         //
