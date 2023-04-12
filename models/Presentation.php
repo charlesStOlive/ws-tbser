@@ -37,7 +37,6 @@ class Presentation extends Model
         'state' => 'required',
         'name' => 'required',
         'slug' => 'required',
-        'data_source' => 'required',
     ];
 
     public $customMessages = [
@@ -82,6 +81,12 @@ class Presentation extends Model
         'deleted_at',
     ];
 
+/**
+    * @var array Spécifié le type d'export à utiliser pour chaque champs
+    */
+    public $importExportConfig = [
+    ]; 
+
     /**
      * @var array Relations
      */
@@ -97,8 +102,14 @@ class Presentation extends Model
     ];
     public $belongsToMany = [
     ];        
-    public $morphTo = [];
+    public $morphTo = [
+    ];
     public $morphOne = [
+        'waka_session' => [
+            'Waka\Session\Models\WakaSession',
+            'name' => 'sessioneable',
+            'delete' => true
+        ],
     ];
     public $morphMany = [
         'rule_asks' => [

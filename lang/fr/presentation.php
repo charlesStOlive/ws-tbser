@@ -2,7 +2,6 @@
 return [
     'courriers' => 'Gestion presentation',
     'create' => 'Créer presentation',
-    'data_source' => 'Data Source',
     'debug' => 'Debuger',
     'debug_com' => 'Attention cela les données non sauvegardé de la présentation seront perdus. ',
     'debug_data' => 'Debug data',
@@ -10,7 +9,6 @@ return [
     'form_name' => 'Gestion presentation',
     'is_lot' => 'Autoriser dans les lots ?',
     'name' => 'libellé presentation',
-    'name_construction' => 'Construction du nom du fichier',
     'output_name' => 'Construction du nom du fichier',
     'preview_name' => 'Voir presentation',
     'rule_asks' => 'Champs éditables',
@@ -25,8 +23,9 @@ return [
     'tab_edit' => 'Editer presentation',
     'tab_infos' => 'Infos',
     'tab_options' => 'Options',
+    'tab_session' => 'Session',
     'test' => 'Tester',
-    'test_id' => 'Modèle de test',
-    'title' => 'Titre du presentation',
-    'update' => 'Modification presentation'
+    'title' => 'Gestion presentation',
+    'update' => 'Modification presentation',
+    'waka_session' => 'Clef pour LP'
 ];

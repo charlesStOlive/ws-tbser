@@ -79,14 +79,12 @@ class PresentationBehavior extends ControllerBehavior
 
     public function onSelectPresentation() {
         $productorId = post('productorId');
-        $modelClass = post('modelClass');
-        $modelId = post('modelId');
-        $presentation = Presentation::find($productorId);
-        $ds = \DataSources::findByClass($modelClass);
-        $asks = $ds->getProductorAsks('Waka\Tbser\Models\Presentation',$productorId, $modelId);
+        $productor = PresentationCreator::find($productorId);
         $askDataWidget = $this->createAskDataWidget();
+        $asks = $productor->getProductorAsks();
         $askDataWidget->addFields($asks);
         $this->vars['askDataWidget'] = $askDataWidget;
+        
         return [
             '#askDataWidget' => $this->makePartial('$/waka/utils/models/ask/_widget_ask_data.htm')
         ];
@@ -130,14 +128,8 @@ class PresentationBehavior extends ControllerBehavior
     public function onLoadPresentationTest()
     {
         $productorId = post('productorId');
-        $presentationTestId = Presentation::find($productorId)->test_id;
-        if ($presentationTestId) {
-            $modelId = $presentationTestId;
-            //trace_log($modelId);
-            return Redirect::to('/backend/waka/tbser/presentations/makepresentation/?productorId=' . $productorId . '&modelId=' . $modelId);
-        } else {
-            throw new \ValidationException(['error' => "Choisissez un modèle de test"]);
-        }
+        $productor = PresentationCreator::find($productorId)->setModelTest();
+        return Redirect::to('/backend/waka/tbser/presentations/makepresentation/?productorId=' . $productorId . '&modelId=' . $productor->modelId);
     }
     public function makepresentation()
     {
@@ -156,20 +148,6 @@ class PresentationBehavior extends ControllerBehavior
             throw new \ValidationException(['test_id' => "Le modèle de test n'est pas renseigné ou n'existe plus"]);
         }
         return $productor->setModelId($modelTest)->checkPresentation();
-    }
-    //
-    public function onDebugPpt() {
-        $productorId = post('productorId');
-        //trace_log('productorId : '.$productorId);
-        $merger = new MergePpt();
-        //trace_log('ok');
-        $presentation = Presentation::find($productorId);
-        //trace_log('ok2');
-        $merger->loadTemplate($presentation->src->getLocalPath());
-        return  $merger->degubTemplate();
-        $presentation->debug_data = $debugData;
-        $presentation->save();
-        return \Redirect::refresh();
     }
     //
     public function createPresentationBehaviorWidget()

@@ -8,8 +8,8 @@ fields:
         span: left
         type: balloon-selector
         required: true
-        default: Brouillon
         options: listStates
+        default: Actif
         permissions: [waka.worder.admin.*]
     name:
         label: waka.tbser::presentation.name
@@ -37,14 +37,6 @@ fields:
         useCaption: false
         permissions: [waka.worder.admin.super]
         tab: waka.tbser::presentation.tab_edit
-    data_source:
-        label: waka.tbser::presentation.data_source
-        span: left
-        type: dropdown
-        placeholder: waka.utils::lang.global.placeholder
-        required: true
-        options: listDataSource
-        permissions: [waka.worder.admin.super]
     output_name:
         label: waka.tbser::presentation.output_name
         span: auto

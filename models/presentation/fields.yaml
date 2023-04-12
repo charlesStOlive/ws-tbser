@@ -7,8 +7,8 @@ fields:
         span: right
         type: balloon-selector
         required: true
-        default: Brouillon
         options: listStates
+        default: Actif
         permissions: [waka.worder.admin.*]
     output_name:
         label: waka.tbser::presentation.output_name
@@ -54,14 +54,6 @@ tabs:
             ruleMode: fnc
             permissions: [waka.rules.fncs.*]
             tab: waka.tbser::presentation.tab_edit
-        test_id:
-            label: waka.tbser::presentation.test_id
-            span: auto
-            type: dropdown
-            placeholder: waka.utils::lang.global.placeholder
-            options: listDataSourceTarget
-            permissions: [waka.worder.admin.*]
-            tab: waka.tbser::presentation.tab_options
         is_lot:
             label: waka.tbser::presentation.is_lot
             span: left
@@ -84,6 +76,13 @@ tabs:
             size: giant
             permissions: [waka.worder.admin.*]
             tab: waka.tbser::presentation.tab_debug
+        waka_session:
+            label: waka.tbser::presentation.waka_session
+            span: full
+            type: partial
+            path: field_waka_session
+            permissions: [waka.mailer.admin.super]
+            tab: waka.tbser::presentation.tab_session
 secondaryTabs:
     fields:
         # info:

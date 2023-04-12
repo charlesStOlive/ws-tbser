@@ -8,9 +8,11 @@ class CreatePresentationsTableU110 extends Migration
 {
     public function up()
     {
-        Schema::table('waka_tbser_presentations', function (Blueprint $table) {
-            $table->renameColumn('name_construction', 'output_name');
-        });
+        if (!Schema::hasColumn('waka_tbser_presentations', 'output_name')){
+            Schema::table('waka_tbser_presentations', function (Blueprint $table) {
+                $table->renameColumn('name_construction', 'output_name');
+            });
+        }
     }
 
     public function down()
